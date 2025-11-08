@@ -1,9 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:whatsapp_series/Screens/Login/loginscreen.dart';
 import 'package:whatsapp_series/Widgets/uihelper.dart';
 
 class OnBoardingScreen extends StatelessWidget {
+  const OnBoardingScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
