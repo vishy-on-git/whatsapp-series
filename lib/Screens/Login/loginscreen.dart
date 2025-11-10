@@ -8,7 +8,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
   final TextEditingController controller = TextEditingController(text: 'value');
   final TextEditingController countryCodeController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
@@ -146,25 +145,27 @@ class _LoginScreenState extends State<LoginScreen> {
                           decoration: InputDecoration(
                             hintText: "+91",
                             filled: true,
-                            fillColor: Color(0xFF05AA82)
+                            fillColor: Color(0xFF05AA82),
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(width: 200, child: TextField(
-                      controller: phoneNumberController,
-                      decoration: InputDecoration(
-                        fillColor: Color(0xFF05AA82),
-                        border: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFF05AA82))
-                        )
+                    SizedBox(
+                      width: 200,
+                      child: TextField(
+                        controller: phoneNumberController,
+                        decoration: InputDecoration(
+                          fillColor: Color(0xFF05AA82),
+                          border: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color(0xFF05AA82)),
+                          ),
+                        ),
+                        keyboardType: TextInputType.numberWithOptions(),
                       ),
-                      keyboardType: TextInputType.numberWithOptions(),
-                    )),
+                    ),
                   ],
                 ),
-                SizedBox(width: 70,),
-
+                SizedBox(width: 70),
               ],
             ),
           ),
@@ -172,12 +173,31 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       floatingActionButton: UiHelper.CustomButton(
         callback: () {
-          String phNumber="${countryCodeController.text}${phoneNumberController.text}";
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>OTPScreen(phNumber: phNumber,)));
+          String phNumber =
+              "${countryCodeController.text}${phoneNumberController.text}";
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => OTPScreen(phNumber: phNumber),
+            ),
+          );
         },
         buttonname: "Next",
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
+  }
+
+  login(String phNumber) {
+    if (phNumber == "") {
+      return ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Enter a valid number")));
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => OTPScreen(phNumber: phNumber)),
+      );
+    }
   }
 }
