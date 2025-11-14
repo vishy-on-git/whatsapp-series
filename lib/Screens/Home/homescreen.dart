@@ -32,9 +32,9 @@ class Homescreen extends StatelessWidget {
               ),
               tabs: [
                 Tab(icon: Icon(Icons.camera_alt)),
-                Tab(text: "CHATS"),
-                Tab(text: "STATUS"),
-                Tab(text: "CALLS"),
+                Tab(child: UiHelper.CustomText(text: "CHATS", height: 14,color: Color(0xFFFFFFFF)),),
+                Tab(child: UiHelper.CustomText(text: "STATUS", height: 14,color: Color(0xFFFFFFFF)),),
+                Tab(child: UiHelper.CustomText(text: "CALLS", height: 14,color: Color(0xFFFFFFFF)),),
               ],
             ),
           ),
