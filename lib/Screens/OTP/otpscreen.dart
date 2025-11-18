@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:whatsapp_series/Screens/Home/homescreen.dart';
 import 'package:whatsapp_series/Screens/Profile/profileinfo.dart';
 import 'package:whatsapp_series/Widgets/uihelper.dart';
@@ -7,12 +8,12 @@ import 'package:pinput/pinput.dart';
 class OTPScreen extends StatelessWidget {
   OTPScreen({super.key, required this.phNumber});
   final String phNumber;
-  TextEditingController otp1controller =TextEditingController();
-  TextEditingController otp2controller =TextEditingController();
-  TextEditingController otp3controller =TextEditingController();
-  TextEditingController otp4controller =TextEditingController();
-  TextEditingController otp5controller =TextEditingController();
-  TextEditingController otp6controller =TextEditingController();
+  TextEditingController otp1controller = TextEditingController();
+  TextEditingController otp2controller = TextEditingController();
+  TextEditingController otp3controller = TextEditingController();
+  TextEditingController otp4controller = TextEditingController();
+  TextEditingController otp5controller = TextEditingController();
+  TextEditingController otp6controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +63,7 @@ class OTPScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 20,),
+                const SizedBox(height: 20),
                 Pinput(
                   length: 6,
                   showCursor: true,
@@ -71,26 +72,39 @@ class OTPScreen extends StatelessWidget {
                     height: 40,
                     decoration: BoxDecoration(
                       color: Colors.grey.shade200,
-                      borderRadius: BorderRadius.circular(10)
+                      borderRadius: BorderRadius.circular(10),
                     ),
                   ),
                 ),
-                const SizedBox(height: 30,),
+                const SizedBox(height: 30),
                 GestureDetector(
-                  onTap: (){
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Feature coming soon!"),),);
+                  onTap: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Feature coming soon!")),
+                    );
                   },
-                  child: UiHelper.CustomText(text: "Didn't receive code?", height: 14),
+                  child: UiHelper.CustomText(
+                    text: "Didn't receive code?",
+                    height: 14,
+                  ),
                 ),
-                SizedBox(height: 50,),
+                SizedBox(height: 50),
               ],
             ),
           ),
         ),
       ),
-      floatingActionButton: UiHelper.CustomButton(callback: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>ProfileScreen()),);
-      }, buttonname: "Next"),
+      floatingActionButton: UiHelper.CustomButton(
+        callback: () async {
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.setBool("loggedIn", true);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ProfileScreen()),
+          );
+        },
+        buttonname: "Next",
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
