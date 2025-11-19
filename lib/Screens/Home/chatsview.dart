@@ -28,52 +28,49 @@ class ChatTile extends StatelessWidget {
 
     DateFormat format=DateFormat.jm();
 
-    return Scaffold(
-      body: Container(
-        padding: EdgeInsets.symmetric(vertical: 14, horizontal: 12),
-        height: 78,
-        child: Row(
-          spacing: 8.0,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            CircleAvatar(
-              radius: 27,
-              backgroundColor: Colors.black,
-              backgroundImage: AssetImage(
-                chat.image ?? "assets/images/photo-camera 1.png",
-              ),
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 14, horizontal: 12),
+      height: 78,
+      child: Row(
+        spacing: 8.0,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          CircleAvatar(
+            radius: 27,
+            backgroundColor: Colors.black,
+            backgroundImage: AssetImage(
+              chat.image ?? "assets/images/photo-camera 1.png",
             ),
-            SizedBox(height: 8),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  UiHelper.CustomText(
-                    text: chat.contactName,
-                    height: 14,
-                    fontweight: FontWeight.bold,
-                    color: Color(0xFF000000),
-                  ),
-                  UiHelper.CustomText(
-                    text: chat.text,
-                    height: 13,
-                    color: Color(0xFF889095),
-                  ),
-                  SizedBox(height: 8),
-                ],
-              ),
-            ),
-            Column(
+          ),
+          SizedBox(height: 8),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                UiHelper.CustomText(text: format.format(chat.time).toString(), height: 14,color: Color(0xFF026500),fontweight: FontWeight.bold),
-                UnreadCount(unreadCount: chat.count)
+                UiHelper.CustomText(
+                  text: chat.contactName,
+                  height: 14,
+                  fontweight: FontWeight.bold,
+                  color: Color(0xFF000000),
+                ),
+                UiHelper.CustomText(
+                  text: chat.text,
+                  height: 13,
+                  color: Color(0xFF889095),
+                ),
+                SizedBox(height: 8),
               ],
-            )
-          ],
-        ),
+            ),
+          ),
+          Column(
+            children: [
+              UiHelper.CustomText(text: format.format(chat.time).toString(), height: 14,color: Color(0xFF026500),fontweight: FontWeight.bold),
+              UnreadCount(unreadCount: chat.count)
+            ],
+          )
+        ],
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () {}, child: Container(decoration: BoxDecoration(shape: BoxShape.circle),),),
     );
   }
 }
