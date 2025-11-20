@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:whatsapp_series/Screens/Home/chatsview.dart';
+import 'package:whatsapp_series/Screens/Home/statusview.dart';
 import 'package:whatsapp_series/Screens/Login/loginscreen.dart';
 import 'package:whatsapp_series/Widgets/uihelper.dart';
 
@@ -112,7 +113,7 @@ class Homescreen extends StatelessWidget {
           children: [
             Container(color: Colors.red),
             Chatsview(),
-            Container(color: Colors.blue),
+            Statusview(),
             Container(color: Colors.cyan),
           ],
         ),
