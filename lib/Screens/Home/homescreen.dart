@@ -2,14 +2,20 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:whatsapp_series/Screens/Home/callsview.dart';
+import 'package:whatsapp_series/Screens/Home/camera_view.dart';
 import 'package:whatsapp_series/Screens/Home/chatsview.dart';
 import 'package:whatsapp_series/Screens/Home/statusview.dart';
 import 'package:whatsapp_series/Screens/Login/loginscreen.dart';
 import 'package:whatsapp_series/Widgets/uihelper.dart';
 
-class Homescreen extends StatelessWidget {
+class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
 
+  @override
+  State<Homescreen> createState() => _HomescreenState();
+}
+
+class _HomescreenState extends State<Homescreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -112,7 +118,7 @@ class Homescreen extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            Container(color: Colors.red),
+            CameraView(),
             Chatsview(),
             Statusview(),
             CallsView(),

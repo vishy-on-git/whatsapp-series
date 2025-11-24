@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:whatsapp_series/Screens/Home/homescreen.dart';
 import 'package:whatsapp_series/Widgets/uihelper.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -10,6 +13,26 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  XFile? pickedImage;
+  ImagePicker picker=ImagePicker();
+
+  Future<void> pickProfileImage () async{
+    final XFile? image= await picker.pickImage(source: ImageSource.gallery);
+
+    if(image!=null){
+      setState(() {
+        pickedImage=image;
+      });
+    }
+  }
+
+  void removePhoto(){
+    setState(() {
+      pickedImage=null;
+    });
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,15 +59,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 color: Color(0xFF5E5E5E),
               ),
               SizedBox(height: 22),
-              Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Color(0xFFEAEAEA),
-                ),
-                height: 101,
-                width: 120,
-                child: Center(
-                  child: Image.asset("assets/images/photo-camera 1.png"),
+              GestureDetector(
+                onTap: pickProfileImage,
+                child: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color(0xFFEAEAEA),
+                  ),
+                  height: 101,
+                  width: 120,
+                  child: Center(
+                    child: pickedImage==null?Image.asset("assets/images/photo-camera 1.png"):ClipOval(
+                      child: Image.file(
+                        File(pickedImage!.path),
+                        fit: BoxFit.cover,
+                        width: 101,
+                        height: 101,
+                      ),
+                    ),
+                  ),
                 ),
               ),
               SizedBox(height: 20),

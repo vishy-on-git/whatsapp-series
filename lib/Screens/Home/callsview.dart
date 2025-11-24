@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:whatsapp_series/Screens/Home/Data/callmodel.dart';
+import 'package:whatsapp_series/Widgets/uihelper.dart';
 
 class CallsView extends StatelessWidget {
-
-
   const CallsView({super.key});
 
   @override
@@ -16,11 +15,16 @@ class CallsView extends StatelessWidget {
             leading: CircleAvatar(
               radius: 25,
               backgroundColor: Colors.teal,
-              child: const Icon(Icons.link, color: Colors.white),
+              child: Transform.rotate(
+                angle: 135 * 3.1415926535 / 180,
+                child: Icon(Icons.link, color: Colors.white, size: 28.0),
+              ),
             ),
-            title: const Text(
-              "Create call link",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            title: UiHelper.CustomText(
+              text: "Create call link",
+              height: 16,
+              fontweight: FontWeight.bold,
+              color: Colors.black,
             ),
             subtitle: const Text("Share a link for your WhatsApp call"),
           ),

@@ -42,7 +42,6 @@ class MyStatusTile extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
-                    fit: BoxFit.cover,
                     image: AssetImage(
                       "/Users/vishyaryan/StudioProjects/whatsapp_series/assets/images/black-silhouette-of-faceless-person-with-curly-hair-for-artistic-design-projects-vector.jpg",
                     ),
@@ -50,8 +49,8 @@ class MyStatusTile extends StatelessWidget {
                 ),
               ),
               Positioned(
-                right: 1,
-                bottom: 1,
+                right: 2,
+                bottom: 2,
                 child: Container(
                   height: 20,
                   width: 20,
