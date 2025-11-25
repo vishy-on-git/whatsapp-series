@@ -1,6 +1,6 @@
-import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:whatsapp_series/Screens/Home/Chats/chatscreen.dart';
 import 'package:whatsapp_series/Screens/Home/Data/chatmodel.dart';
 import 'package:whatsapp_series/Widgets/uihelper.dart';
 
@@ -12,7 +12,20 @@ class Chatsview extends StatelessWidget {
     return ListView.builder(
       itemCount: chats.length,
       itemBuilder: (BuildContext context, int index) {
-        return ChatTile(chat: chats[index]);
+        return InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Chatscreen(
+                  contactName: chats[index].contactName,
+                  contactAvatar: chats[index].image,
+                ),
+              ),
+            );
+          },
+          child: ChatTile(chat: chats[index]),
+        );
       },
     );
   }
@@ -25,14 +38,12 @@ class ChatTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    DateFormat format=DateFormat.jm();
+    DateFormat format = DateFormat.jm();
 
     return Container(
       padding: EdgeInsets.symmetric(vertical: 14, horizontal: 12),
       height: 78,
       child: Row(
-        spacing: 8.0,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           CircleAvatar(
@@ -65,10 +76,15 @@ class ChatTile extends StatelessWidget {
           ),
           Column(
             children: [
-              UiHelper.CustomText(text: format.format(chat.time).toString(), height: 14,color: Color(0xFF026500),fontweight: FontWeight.bold),
-              UnreadCount(unreadCount: chat.count)
+              UiHelper.CustomText(
+                text: format.format(chat.time).toString(),
+                height: 14,
+                color: Color(0xFF026500),
+                fontweight: FontWeight.bold,
+              ),
+              UnreadCount(unreadCount: chat.count),
             ],
-          )
+          ),
         ],
       ),
     );
@@ -77,14 +93,21 @@ class ChatTile extends StatelessWidget {
 
 class UnreadCount extends StatelessWidget {
   final int unreadCount;
-  const UnreadCount({super.key,required this.unreadCount});
+  const UnreadCount({super.key, required this.unreadCount});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(8.0),
-      decoration: BoxDecoration(color: Color(0xFF036A01),shape: BoxShape.circle),
-      child: UiHelper.CustomText(text: unreadCount.toString(), height: 12,color: Color(0xFFFFFFFF)),
+      decoration: BoxDecoration(
+        color: Color(0xFF036A01),
+        shape: BoxShape.circle,
+      ),
+      child: UiHelper.CustomText(
+        text: unreadCount.toString(),
+        height: 12,
+        color: Color(0xFFFFFFFF),
+      ),
     );
   }
 }
