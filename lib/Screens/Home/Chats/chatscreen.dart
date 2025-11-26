@@ -11,11 +11,25 @@ class Chatscreen extends StatefulWidget {
   @override
   State<Chatscreen> createState() => _ChatscreenState();
 }
-
 class _ChatscreenState extends State<Chatscreen> {
+  final TextEditingController msgController=TextEditingController();
+  bool showSend=false;
+
+
   @override
+  void initState(){
+    super.initState();
+
+    msgController.addListener((){
+      setState(() {
+        showSend=msgController.text.trim().isNotEmpty;
+      });
+    });
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -111,6 +125,54 @@ class _ChatscreenState extends State<Chatscreen> {
             ),
           ),
         ],
+      ),
+
+      bottomSheet: Container(
+        color: Colors.white,
+        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+        child: Row(
+          children: [
+            Icon(Icons.emoji_emotions_outlined, color: Colors.grey[600]),
+
+            SizedBox(height: 10),
+
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade200,
+                  borderRadius: BorderRadius.circular(30)
+                ),
+                child: TextField(
+                  minLines: 1,
+                  maxLines: 5,
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(
+                    hintText: "Message",
+                    border: InputBorder.none,
+                  ),
+                ),
+              ),
+            ),
+
+            SizedBox(height: 10,),
+
+            Icon(Icons.attach_file, color: Colors.grey[700],),
+
+            SizedBox(height: 12,),
+
+            Icon(Icons.camera_alt,color: Colors.grey[700],),
+
+            Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Color(0xFF00A884)
+              ),
+              padding: EdgeInsets.all(12),
+              child: Icon(Icons.mic,color: Colors.white,),
+            )
+          ],
+        ),
       ),
     );
   }
