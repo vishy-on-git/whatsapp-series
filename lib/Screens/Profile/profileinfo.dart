@@ -101,7 +101,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           
           Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => Homescreen()),
+              MaterialPageRoute(builder: (context) => Homescreen(profileImage: pickedImage,)),
               (Route<dynamic>_)=>false
           );
         },

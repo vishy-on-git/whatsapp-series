@@ -1,21 +1,29 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:whatsapp_series/Screens/Home/callsview.dart';
 import 'package:whatsapp_series/Screens/Home/camera_view.dart';
 import 'package:whatsapp_series/Screens/Home/chatsview.dart';
 import 'package:whatsapp_series/Screens/Home/statusview.dart';
 import 'package:whatsapp_series/Screens/Login/loginscreen.dart';
+import 'package:whatsapp_series/Screens/NewCommunity/communityscreen1.dart';
+import 'package:whatsapp_series/Screens/Settings/settingscreen.dart';
 import 'package:whatsapp_series/Widgets/uihelper.dart';
 
 class Homescreen extends StatefulWidget {
-  const Homescreen({super.key});
+  final XFile? profileImage;
+
+
+  const Homescreen({super.key,this.profileImage});
 
   @override
   State<Homescreen> createState() => _HomescreenState();
 }
 
 class _HomescreenState extends State<Homescreen> {
+  XFile? get profileImage=>widget.profileImage;
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -33,6 +41,7 @@ class _HomescreenState extends State<Homescreen> {
           actions: [
             IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
             PopupMenuButton(
+              icon: Icon(Icons.more_vert),
               itemBuilder: (context) => [
                 PopupMenuItem(
                   value: "new_group",
@@ -43,6 +52,9 @@ class _HomescreenState extends State<Homescreen> {
                   ),
                 ),
                 PopupMenuItem(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Communityscreen1()));
+                  },
                   value: "new_community",
                   child: UiHelper.CustomText(
                     text: "New community",
@@ -67,8 +79,41 @@ class _HomescreenState extends State<Homescreen> {
                   ),
                 ),
                 PopupMenuItem(
-                  onTap: (){
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+                  value: "starred",
+                  child: UiHelper.CustomText(
+                    text: "Starred",
+                    height: 13,
+                    color: Colors.black,
+                  ),
+                ),
+                PopupMenuItem(
+                  value: "read_all",
+                  child: UiHelper.CustomText(
+                    text: "Read all",
+                    height: 13,
+                    color: Colors.black,
+                  ),
+                ),
+                PopupMenuItem(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Settingscreen(displayPhoto: profileImage,)),
+                    );
+                  },
+                  value: "settings",
+                  child: UiHelper.CustomText(
+                    text: "Settings",
+                    height: 13,
+                    color: Colors.black,
+                  ),
+                ),
+                PopupMenuItem(
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()),
+                    );
                   },
                   value: "logout",
                   child: UiHelper.CustomText(
@@ -117,12 +162,7 @@ class _HomescreenState extends State<Homescreen> {
           ),
         ),
         body: TabBarView(
-          children: [
-            CameraView(),
-            Chatsview(),
-            Statusview(),
-            CallsView(),
-          ],
+          children: [CameraView(), Chatsview(), Statusview(), CallsView()],
         ),
       ),
     );

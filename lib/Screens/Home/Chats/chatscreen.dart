@@ -30,6 +30,7 @@ class _ChatscreenState extends State<Chatscreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
+      extendBody: true,
       appBar: AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -126,54 +127,55 @@ class _ChatscreenState extends State<Chatscreen> {
           ),
         ],
       ),
-
-      bottomSheet: Container(
-        color: Colors.white,
-        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-        child: Row(
-          children: [
-            Icon(Icons.emoji_emotions_outlined, color: Colors.grey[600]),
-
-            SizedBox(height: 10),
-
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 15),
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade200,
-                  borderRadius: BorderRadius.circular(30)
-                ),
-                child: TextField(
-                  minLines: 1,
-                  maxLines: 5,
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(
-                    hintText: "Message",
-                    border: InputBorder.none,
+      backgroundColor: Colors.transparent,
+      bottomSheet: SafeArea(
+        bottom: true,
+        child: Container(
+          color: Colors.transparent,
+          padding: EdgeInsets.all(8),
+          child: Row(
+            spacing: 8.0,
+            children: [
+              Expanded(
+                child: Container(
+                  height: 35,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadiusGeometry.circular(40),
+                    color: Colors.white,
                   ),
+                  child: Row(children: [
+                    Icon(Icons.emoji_emotions_outlined,color: Colors.grey[400],),
+                    SizedBox(width: 6,),
+                    Expanded(
+                      child: TextField(
+                        controller: msgController,
+                        minLines: 1,
+                        maxLines: 5,
+                        decoration: const InputDecoration(
+                          hintText: "Message",
+                          border: InputBorder.none
+                        ),
+                      ),
+                    ),
+
+                    Icon(Icons.attach_file_outlined,color: Colors.grey[700],),
+                    SizedBox(width: 6,),
+                    Icon(Icons.camera_alt,color: Colors.grey[700],)
+                  ],)
                 ),
               ),
-            ),
-
-            SizedBox(height: 10,),
-
-            Icon(Icons.attach_file, color: Colors.grey[700],),
-
-            SizedBox(height: 12,),
-
-            Icon(Icons.camera_alt,color: Colors.grey[700],),
-
-            Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color(0xFF00A884)
+              Container(
+                decoration: BoxDecoration(
+                  color: Color(0xFF00A884),
+                  shape: BoxShape.circle,
+                ),
+                padding: EdgeInsets.all(12),
+                child: Icon(showSend?Icons.send:Icons.mic,color: Colors.white,),
               ),
-              padding: EdgeInsets.all(12),
-              child: Icon(Icons.mic,color: Colors.white,),
-            )
-          ],
+            ],
+          ),
         ),
-      ),
+      )
     );
   }
 }
