@@ -1,10 +1,14 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:whatsapp_series/Screens/Home/Data/statusmodel.dart';
 import 'package:whatsapp_series/Widgets/uihelper.dart';
 
 class Statusview extends StatelessWidget {
-  const Statusview({super.key});
+  final XFile? myStatusImage;
+
+  const Statusview({super.key, this.myStatusImage});
 
   @override
   Widget build(BuildContext context) {
@@ -12,10 +16,17 @@ class Statusview extends StatelessWidget {
       itemCount: statuses.length + 2,
       itemBuilder: (BuildContext context, int index) {
         if (index == 0) {
-          return MyStatusTile();
+          return MyStatusTile(myStatusImage: myStatusImage);
         }
-        if(index==1){
-          return Padding(padding: EdgeInsets.only(top: 6,bottom: 6,left: 30),child: UiHelper.CustomText(text: "Recent Updates", height: 14,color: Color(0xFF758289)),);
+        if (index == 1) {
+          return Padding(
+            padding: EdgeInsets.only(top: 6, bottom: 6, left: 30),
+            child: UiHelper.CustomText(
+              text: "Recent Updates",
+              height: 14,
+              color: Color(0xFF758289),
+            ),
+          );
         }
         return StatusTile(status: statuses[index - 2]);
       },
@@ -24,7 +35,9 @@ class Statusview extends StatelessWidget {
 }
 
 class MyStatusTile extends StatelessWidget {
-  const MyStatusTile({super.key});
+  final XFile? myStatusImage;
+
+  const MyStatusTile({super.key, this.myStatusImage});
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +55,10 @@ class MyStatusTile extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
-                    image: AssetImage(
-                      "/Users/vishyaryan/StudioProjects/whatsapp_series/assets/images/black-silhouette-of-faceless-person-with-curly-hair-for-artistic-design-projects-vector.jpg",
-                    ),
+                    fit: BoxFit.cover,
+                    image: myStatusImage != null
+                        ? FileImage(File(myStatusImage!.path))
+                        : const AssetImage("assets/images/photo-camera 1.png"),
                   ),
                 ),
               ),
@@ -61,25 +75,34 @@ class MyStatusTile extends StatelessWidget {
                   child: Container(
                     height: 12,
                     width: 12,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       color: Color(0xFF00A884),
                     ),
-                    child: Icon(Icons.add, color: Colors.white, size: 20),
+                    child: const Icon(Icons.add, color: Colors.white, size: 20),
                   ),
                 ),
               ),
             ],
           ),
-          Expanded(child: Column(
-            spacing: 3.0,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              UiHelper.CustomText(text: "MyStatus", height: 15,color: Color(0xFF3A4B55),fontweight: FontWeight.bold),
-              UiHelper.CustomText(text: "Tap to add status update", height: 11,color: Color(0xFF758289))
-            ],
-          ))
+          Expanded(
+            child: Column(
+              spacing: 3.0,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                UiHelper.CustomText(
+                    text: "My Status",
+                    height: 15,
+                    color: Color(0xFF3A4B55),
+                    fontweight: FontWeight.bold),
+                UiHelper.CustomText(
+                    text: "Tap to add status update",
+                    height: 11,
+                    color: Color(0xFF758289)),
+              ],
+            ),
+          )
         ],
       ),
     );
@@ -94,6 +117,7 @@ class StatusTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String statusTime = DateFormat.jm().format(status.timeAgo);
+
     return Container(
       padding: EdgeInsets.symmetric(vertical: 7, horizontal: 7),
       height: 78,
@@ -115,18 +139,16 @@ class StatusTile extends StatelessWidget {
             ),
             child: Container(
               padding: EdgeInsets.all(2),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 color: Colors.white,
               ),
               child: CircleAvatar(
                 radius: 40,
-                backgroundColor: Colors.black,
                 backgroundImage: AssetImage(status.imageURL),
               ),
             ),
           ),
-
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

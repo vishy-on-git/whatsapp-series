@@ -14,15 +14,16 @@ import 'package:whatsapp_series/Widgets/uihelper.dart';
 class Homescreen extends StatefulWidget {
   final XFile? profileImage;
 
-
-  const Homescreen({super.key,this.profileImage});
+  const Homescreen({super.key, this.profileImage});
 
   @override
   State<Homescreen> createState() => _HomescreenState();
 }
 
 class _HomescreenState extends State<Homescreen> {
-  XFile? get profileImage=>widget.profileImage;
+  bool isSearching = false;
+  TextEditingController searchController = TextEditingController();
+  XFile? get profileImage => widget.profileImage;
 
   @override
   Widget build(BuildContext context) {
@@ -32,98 +33,143 @@ class _HomescreenState extends State<Homescreen> {
         appBar: AppBar(
           elevation: 0.0,
           toolbarHeight: 90,
-          title: UiHelper.CustomText(
-            text: "WhatsApp",
-            height: 20,
-            color: Colors.white,
-            fontweight: FontWeight.bold,
-          ),
+          title: isSearching
+              ? TextField(
+                  controller: searchController,
+                  autofocus: true,
+                  style: TextStyle(color: Colors.white, fontFamily: 'Regular', fontSize: 18,fontWeight: FontWeight.normal),
+                  cursorColor: Colors.white,
+                  decoration: InputDecoration(
+                    hintText: "Search...",
+                    hintStyle: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontFamily: 'Regular'
+                    ),
+                    border: InputBorder.none,
+                  ),
+                  onChanged: (value) {
+                    setState(() {});
+                  },
+                )
+              : UiHelper.CustomText(
+                  text: "WhatsApp",
+                  height: 20,
+                  color: Colors.white,
+                  fontweight: FontWeight.bold,
+                ),
           actions: [
-            IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
-            PopupMenuButton(
-              icon: Icon(Icons.more_vert),
-              itemBuilder: (context) => [
-                PopupMenuItem(
-                  value: "new_group",
-                  child: UiHelper.CustomText(
-                    text: "New group",
-                    height: 13,
-                    color: Colors.black,
+            isSearching
+                ? IconButton(
+                    onPressed: () {
+                      setState(() {
+                        isSearching = false;
+                        searchController.clear();
+                      });
+                    },
+                    icon: Icon(Icons.close),
+                  )
+                : IconButton(
+                    onPressed: () {
+                      setState(() {
+                        isSearching = true;
+                      });
+                    },
+                    icon: Icon(Icons.search),
                   ),
-                ),
-                PopupMenuItem(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Communityscreen1()));
-                  },
-                  value: "new_community",
-                  child: UiHelper.CustomText(
-                    text: "New community",
-                    height: 13,
-                    color: Colors.black,
+            if (!isSearching)
+              PopupMenuButton(
+                icon: Icon(Icons.more_vert),
+                itemBuilder: (context) => [
+                  PopupMenuItem(
+                    value: "new_group",
+                    child: UiHelper.CustomText(
+                      text: "New group",
+                      height: 13,
+                      color: Colors.black,
+                    ),
                   ),
-                ),
-                PopupMenuItem(
-                  value: "broadcast_lists",
-                  child: UiHelper.CustomText(
-                    text: "Broadcast lists",
-                    height: 13,
-                    color: Colors.black,
+                  PopupMenuItem(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Communityscreen1(),
+                        ),
+                      );
+                    },
+                    value: "new_community",
+                    child: UiHelper.CustomText(
+                      text: "New community",
+                      height: 13,
+                      color: Colors.black,
+                    ),
                   ),
-                ),
-                PopupMenuItem(
-                  value: "linked_devices",
-                  child: UiHelper.CustomText(
-                    text: "Linked devices",
-                    height: 13,
-                    color: Colors.black,
+                  PopupMenuItem(
+                    value: "broadcast_lists",
+                    child: UiHelper.CustomText(
+                      text: "Broadcast lists",
+                      height: 13,
+                      color: Colors.black,
+                    ),
                   ),
-                ),
-                PopupMenuItem(
-                  value: "starred",
-                  child: UiHelper.CustomText(
-                    text: "Starred",
-                    height: 13,
-                    color: Colors.black,
+                  PopupMenuItem(
+                    value: "linked_devices",
+                    child: UiHelper.CustomText(
+                      text: "Linked devices",
+                      height: 13,
+                      color: Colors.black,
+                    ),
                   ),
-                ),
-                PopupMenuItem(
-                  value: "read_all",
-                  child: UiHelper.CustomText(
-                    text: "Read all",
-                    height: 13,
-                    color: Colors.black,
+                  PopupMenuItem(
+                    value: "starred",
+                    child: UiHelper.CustomText(
+                      text: "Starred",
+                      height: 13,
+                      color: Colors.black,
+                    ),
                   ),
-                ),
-                PopupMenuItem(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Settingscreen(displayPhoto: profileImage,)),
-                    );
-                  },
-                  value: "settings",
-                  child: UiHelper.CustomText(
-                    text: "Settings",
-                    height: 13,
-                    color: Colors.black,
+                  PopupMenuItem(
+                    value: "read_all",
+                    child: UiHelper.CustomText(
+                      text: "Read all",
+                      height: 13,
+                      color: Colors.black,
+                    ),
                   ),
-                ),
-                PopupMenuItem(
-                  onTap: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()),
-                    );
-                  },
-                  value: "logout",
-                  child: UiHelper.CustomText(
-                    text: "Logout",
-                    height: 13,
-                    color: Colors.black,
+                  PopupMenuItem(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              Settingscreen(displayPhoto: profileImage),
+                        ),
+                      );
+                    },
+                    value: "settings",
+                    child: UiHelper.CustomText(
+                      text: "Settings",
+                      height: 13,
+                      color: Colors.black,
+                    ),
                   ),
-                ),
-              ],
-            ),
+                  PopupMenuItem(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                      );
+                    },
+                    value: "logout",
+                    child: UiHelper.CustomText(
+                      text: "Logout",
+                      height: 13,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
           ],
           bottom: PreferredSize(
             preferredSize: Size.fromHeight(20),
@@ -162,7 +208,12 @@ class _HomescreenState extends State<Homescreen> {
           ),
         ),
         body: TabBarView(
-          children: [CameraView(), Chatsview(), Statusview(), CallsView()],
+          children: [
+            CameraView(),
+            Chatsview(),
+            Statusview(myStatusImage: profileImage),
+            CallsView(),
+          ],
         ),
       ),
     );

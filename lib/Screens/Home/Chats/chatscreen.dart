@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:whatsapp_series/Screens/Calling/callingscreen.dart';
 import 'package:whatsapp_series/Widgets/uihelper.dart';
 
 class Chatscreen extends StatefulWidget {
@@ -12,6 +14,8 @@ class Chatscreen extends StatefulWidget {
   State<Chatscreen> createState() => _ChatscreenState();
 }
 class _ChatscreenState extends State<Chatscreen> {
+
+
   final TextEditingController msgController=TextEditingController();
   bool showSend=false;
 
@@ -20,11 +24,21 @@ class _ChatscreenState extends State<Chatscreen> {
   void initState(){
     super.initState();
 
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+
     msgController.addListener((){
       setState(() {
         showSend=msgController.text.trim().isNotEmpty;
       });
     });
+  }
+
+
+  @override
+  void dispose(){
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    msgController.dispose();
+    super.dispose();
   }
 
   Widget build(BuildContext context) {
@@ -51,7 +65,9 @@ class _ChatscreenState extends State<Chatscreen> {
               ),
             ),
             IconButton(onPressed: () {}, icon: Icon(Icons.videocam)),
-            IconButton(onPressed: () {}, icon: Icon(Icons.call)),
+            IconButton(onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>Callingscreen(avatarImage: widget.contactAvatar)));
+            }, icon: Icon(Icons.call)),
             PopupMenuButton(
               icon: Icon(Icons.more_vert),
               itemBuilder: (context) => [
@@ -153,7 +169,8 @@ class _ChatscreenState extends State<Chatscreen> {
                         maxLines: 5,
                         decoration: const InputDecoration(
                           hintText: "Message",
-                          border: InputBorder.none
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.symmetric(horizontal: 15,vertical:8)
                         ),
                       ),
                     ),

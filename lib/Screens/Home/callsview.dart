@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:whatsapp_series/Screens/Calling/callingscreen.dart';
+import 'package:whatsapp_series/Screens/Calling/videocallingscreen.dart';
 import 'package:whatsapp_series/Screens/Home/Data/callmodel.dart';
 import 'package:whatsapp_series/Widgets/uihelper.dart';
 
 class CallsView extends StatelessWidget {
+
   const CallsView({super.key});
 
   @override
@@ -28,15 +31,13 @@ class CallsView extends StatelessWidget {
             ),
             subtitle: const Text("Share a link for your WhatsApp call"),
           ),
-          const Padding(
+          Padding(
             padding: EdgeInsets.only(left: 16.0, top: 16.0, bottom: 8.0),
-            child: Text(
-              "Recent",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 14,
-                color: Colors.grey,
-              ),
+            child: UiHelper.CustomText(
+              text: "Recent",
+              height: 14,
+              fontweight: FontWeight.bold,
+              color: Colors.grey,
             ),
           ),
           ...callList.map((call) {
@@ -45,12 +46,10 @@ class CallsView extends StatelessWidget {
                 radius: 25,
                 backgroundImage: AssetImage(call.imageURL),
               ),
-              title: Text(
-                call.name,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: call.isMissed ? Colors.red : Colors.black,
-                ),
+              title: UiHelper.CustomText(
+                text: call.name,
+                color: call.isMissed ? Colors.red : Colors.black,
+                fontweight: FontWeight.bold,
               ),
               subtitle: Row(
                 children: [
@@ -60,23 +59,25 @@ class CallsView extends StatelessWidget {
                     size: 16,
                   ),
                   const SizedBox(width: 5),
-                  Text(
-                    _formatTime(call.time),
-                    style: const TextStyle(color: Colors.grey),
-                  ),
+                  UiHelper.CustomText(text: _formatTime(call.time),color: Colors.grey)
                 ],
               ),
-              trailing: Icon(
-                call.isVideoCall ? Icons.videocam : Icons.call,
-                color: Colors.teal,
+              trailing: InkWell(
+                onTap: (){
+                  call.isVideoCall ? Navigator.push(context, MaterialPageRoute(builder: (context)=>Videocallingscreen())) : Navigator.push(context, MaterialPageRoute(builder: (context)=>Callingscreen()));
+                },
+                child: Icon(
+                  call.isVideoCall ? Icons.videocam : Icons.call,
+                  color: Color(0xFF00A884),
+                ),
               ),
             );
-          }).toList(),
+          }),
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        backgroundColor: Colors.teal,
+        backgroundColor: Color(0xFF00A884),
         child: const Icon(Icons.add_call, color: Colors.white),
       ),
     );

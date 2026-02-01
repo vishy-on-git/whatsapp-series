@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:whatsapp_series/Screens/Home/homescreen.dart';
+import 'package:whatsapp_series/Screens/Settings/Account/accountscreen.dart';
 import 'package:whatsapp_series/Widgets/uihelper.dart';
 
 class Settingscreen extends StatelessWidget {
@@ -67,21 +68,26 @@ class Settingscreen extends StatelessWidget {
               ),
             ),
             Divider(color: Colors.grey[500], thickness: 0.09),
-            Padding(
-              padding: const EdgeInsets.all(14.8),
-              child: Row(
-                spacing: 20.0,
-                children: [
-                  Image.asset("assets/images/key_ic.png",height: 35,color: Colors.grey[700],),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    spacing: 5.0,
-                    children: [
-                      UiHelper.CustomText(text: "Account", height: 18,color: Colors.black),
-                      UiHelper.CustomText(text: "Security notifications, change number", height: 15,color: Colors.grey[700])
-                    ],
-                  )
-                ],
+            InkWell(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>Accountscreen()));
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(14.8),
+                child: Row(
+                  spacing: 20.0,
+                  children: [
+                    Image.asset("assets/images/key_ic.png",height: 35,color: Colors.grey[700],),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 5.0,
+                      children: [
+                        UiHelper.CustomText(text: "Account", height: 18,color: Colors.black),
+                        UiHelper.CustomText(text: "Security notifications, change number", height: 15,color: Colors.grey[700])
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
             InkWell(

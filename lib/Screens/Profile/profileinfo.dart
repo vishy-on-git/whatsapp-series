@@ -96,6 +96,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: UiHelper.CustomButton(
         callback: () {
           

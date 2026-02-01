@@ -28,13 +28,15 @@ class UiHelper {
 
   static CustomText({
     required String text,
-    required double height,
+    double? height,
     Color? color,
     FontWeight? fontweight,
+    TextAlign? textAlign,
   }) {
     //'!' ka natlab hai ki koi bhi chiz khaali nhi aa sakti
     return Text(
       text,
+      textAlign: textAlign,
       style: TextStyle(
         fontSize: height,
         color: color ?? Color(0xFF00A884),

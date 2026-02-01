@@ -41,6 +41,10 @@ dependencies:
   shared_preferences: any
   image_picker: any
   font_awesome_flutter: any
+  camera: any
+  permission_handler: any
+  sqflite: ^2.4.2
+  path: ^1.9.1
 
 dev_dependencies:
   flutter_test:
